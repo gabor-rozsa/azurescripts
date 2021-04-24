@@ -20,12 +20,12 @@ Set-Location $updatesfolder
 $updates = get-childitem -Recurse | Where-Object { ($_.extension -eq ".msu") -or ($_.extension -eq ".cab") } | Select-Object fullname 
 foreach ($update in $updates) {
     write-debug $update.fullname
-    $command = "dism /image:" + $mountvolume +":\ /add-package /packagepath:'" + $update.fullname + "'" #comply the command
+    $command = "dism /image:" + $mountvolume +":\ /add-package /packagepath:'" + $update.fullname + "'" #compile the command
     write-debug $command
-    Invoke-Expression $command #execute the complied command(s)
+    Invoke-Expression $command #execute the compiled command(s)
 } 
 
-$command = "dism /image:" + $mountvolume +":\ /Cleanup-Image /StartComponentCleanup /ResetBase" #comply the cleanup command
-Invoke-Expression $command #execute the complied command
+$command = "dism /image:" + $mountvolume +":\ /Cleanup-Image /StartComponentCleanup /ResetBase" #compile the cleanup command
+Invoke-Expression $command #execute the compiled command
 
 Dismount-DiskImage -imagepath $image -confirm:$false #dismount the VM file
