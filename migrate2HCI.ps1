@@ -226,11 +226,12 @@ while ($Repeat) {
     Write-Host "Finished checking for incompatibilities" -ForegroundColor Green
 
     #Importing the VM magic
-    $NewVM = Get-VM -Name $SelectedVMName
-    Write-Host "Started importing the VM" -ForegroundColor Yellow
+        Write-Host "Started importing the VM" -ForegroundColor Yellow
     Import-VM -CompatibilityReport $VMfixed
     Write-Host "Finished importing the VM" -ForegroundColor Green
+    Start-Sleep -s 5
     Write-Host "Clusterizing the VM" -ForegroundColor Yellow
+    $NewVM = Get-VM -Name $SelectedVMName
     $NewVM | Add-ClusterVirtualMachineRole
     Write-Host "VM is now clusterized" -ForegroundColor Green
     Write-Host "Updating the vm version" -ForegroundColor Yellow
