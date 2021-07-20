@@ -10,7 +10,7 @@ Requires administrative access on SOURCE and DESTINATION cluster(s).
   Version:        1.2
   Author:         Rózsa Gábor
   Creation Date:  2021-06-30
-  Purpose/Change: Original version
+  Purpose/Change: Added dummy and some formating changes
 #>
 
 #Requires -Version 7.1
