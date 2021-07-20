@@ -246,7 +246,7 @@ while ($Repeat) {
     $questionStringTPM = "Do you want to enable TPM?"
     $yesResponse = "[Y] Yes "
     $noResponse = "[N] No "
-    $keepResponse = "[K] Keep existing: "
+    $keepResponse = "[K] Keep existing "
    
     #Set description
     Write-Host $questionStringDescription -ForegroundColor Yellow
@@ -255,7 +255,7 @@ while ($Repeat) {
     }
     Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
     Write-Host $noResponse -ForegroundColor White -NoNewline
-    Write-Host $keepResponse -ForegroundColor Green -NoNewline
+    Write-Host "$keepResponse : "-ForegroundColor Green -NoNewline
     $userResponse = (Read-Host).ToUpper()
     switch ($userResponse) {
       "Y" { Set-VM -Name $SelectedVMName -Notes (Read-Host -Prompt "Enter description:"); Write-Host "Description set" -ForegroundColor Green; break }
@@ -267,7 +267,7 @@ while ($Repeat) {
     #Set SMT
     Write-Host $questionStringCPU -ForegroundColor Yellow
     Write-Host "$yesResponse "-ForegroundColor Yellow -NoNewline
-    Write-Host "$noResponse: " -ForegroundColor White -NoNewline
+    Write-Host "$noResponse : " -ForegroundColor White -NoNewline
     $userResponse = (Read-Host).ToUpper()
     switch ($userResponse) {
       "Y" { Set-VMProcessor -VMName $SelectedVMName -HwThreadCountPerCore 0 ; Write-Host "CPU SMT set" -ForegroundColor Green; break }
@@ -282,7 +282,7 @@ while ($Repeat) {
     }
     Write-Host $questionStringTPM -ForegroundColor Yellow
     Write-Host "$yesResponse "-ForegroundColor Yellow -NoNewline
-    Write-Host "$noResponse: " -ForegroundColor White -NoNewline
+    Write-Host "$noResponse : " -ForegroundColor White -NoNewline
     $userResponse = (Read-Host).ToUpper()
     switch ($userResponse) {
       "Y" {
@@ -307,7 +307,7 @@ while ($Repeat) {
     #Set GuestService
     Write-Host $questionStringGuestService -ForegroundColor Yellow
     Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
-    Write-Host "$noResponse: " -ForegroundColor White -NoNewline
+    Write-Host "$noResponse : " -ForegroundColor White -NoNewline
     $userResponse = (Read-Host).ToUpper()
     switch ($userResponse) {
       "Y" { Enable-VMIntegrationService -VMName $SelectedVMName -Name *; Write-Host "Guest Service enabled" -ForegroundColor Green; break }
@@ -319,7 +319,7 @@ while ($Repeat) {
   #Start the migrated VM
   Write-Host $questionStringStartVM -ForegroundColor Yellow
   Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
-  Write-Host "$noResponse: " -ForegroundColor White -NoNewline
+  Write-Host "$noResponse : " -ForegroundColor White -NoNewline
   $userResponse = (Read-Host).ToUpper()
   switch ($userResponse) {
     "Y" { Start-VM -Name $SelectedVMName ; Write-Host "VM started"; break }
@@ -336,7 +336,7 @@ while ($Repeat) {
   #Re-run?
   Write-Host "Re-run script?" -ForegroundColor Yellow
   Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
-  Write-Host "$noResponse: " -ForegroundColor White -NoNewline
+  Write-Host "$noResponse : " -ForegroundColor White -NoNewline
   $userResponse = (Read-Host).ToUpper()
   switch ($userResponse) {
     "Y" { $Repeat = $true; break }
