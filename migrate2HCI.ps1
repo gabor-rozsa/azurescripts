@@ -7,7 +7,7 @@ Provides selection menu to ease VM migration to HCI cluster from legacy Hyper-V 
 .NOTES
 Requires administrative access on SOURCE and DESTINATION cluster(s).
 
-  Version:        1.0
+  Version:        1.2
   Author:         Rózsa Gábor
   Creation Date:  2021-06-30
   Purpose/Change: Original version
@@ -227,7 +227,7 @@ while ($Repeat) {
 
     #Importing the VM magic
         Write-Host "Started importing the VM" -ForegroundColor Yellow
-    Import-VM -CompatibilityReport $VMfixed
+    $dummy = Import-VM -CompatibilityReport $VMfixed
     Write-Host "Finished importing the VM" -ForegroundColor Green
     Start-Sleep -s 5
     Write-Host "Clusterizing the VM" -ForegroundColor Yellow
