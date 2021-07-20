@@ -7,10 +7,10 @@ Provides selection menu to ease VM migration to HCI cluster from legacy Hyper-V 
 .NOTES
 Requires administrative access on SOURCE and DESTINATION cluster(s).
 
-  Version:        1.2
+  Version:        1.5
   Author:         Rózsa Gábor
   Creation Date:  2021-06-30
-  Purpose/Change: Added dummy and some formating changes
+  Purpose/Change: Added checkpoint handling
 #>
 
 #Requires -Version 7.1
@@ -87,6 +87,22 @@ while ($Repeat) {
   } -ArgumentList (, $VMDisks)
   $VMFootprint += $total_size
   Write-Host "VMs footprint: $VMFootprint GB"
+  
+  #Checking for checkpoint(s)
+  $SelectedVMCheckpoint = Get-VMSnapshot -ComputerName $SelectedVM.ComputerName -VMName $SelectedVMName
+  if ($SelectedVMCheckpoint -ne "") {
+    Write-Host "Checkpoint(s) found! Migration is only possible if the checkpoint(s) is removed!" -ForegroundColor Red 
+    Write-Host "Do you want to remove the checkpoint(s)?" -ForegroundColor Red 
+    Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
+    Write-Host "$noResponse : " -ForegroundColor White -NoNewline
+    $userResponse = (Read-Host).ToUpper()
+    switch ($userResponse) {
+      "Y" { $SelectedVMCheckpoint | Remove-VMSnapshot -IncludeAllChildSnapshots ; Write-Host "Checkpoint(s) removed" -ForegroundColor Green; break }
+      "N" { Write-Host "Script cannot continue. Exiting..."; exit }
+      Default { Write-Host "Invalide Response"; Write-Host "Script cannot continue. Exiting..."; exit }
+    }
+  }
+  
 
   #checking online HCI node
   $HCInode1 = "hci node #1"
