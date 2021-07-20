@@ -90,7 +90,7 @@ while ($Repeat) {
   
   #Checking for checkpoint(s)
   $SelectedVMCheckpoint = Get-VMSnapshot -ComputerName $SelectedVM.ComputerName -VMName $SelectedVMName
-  if ($SelectedVMCheckpoint -ne "") {
+  if ($SelectedVMCheckpoint) {
     Write-Host "Checkpoint(s) found! Migration is only possible if the checkpoint(s) is removed!" -ForegroundColor Red 
     Write-Host "Do you want to remove the checkpoint(s)?" -ForegroundColor Red 
     Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
@@ -266,7 +266,7 @@ while ($Repeat) {
    
     #Set description
     Write-Host $questionStringDescription -ForegroundColor Yellow
-    if ($SelectedVMNotes -ne "") {
+    if ($SelectedVMNotes) {
       Write-Host "Existing description: $SelectedVMNotes" -ForegroundColor Blue
     }
     Write-Host $yesResponse -ForegroundColor Yellow -NoNewline
